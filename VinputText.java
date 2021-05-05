@@ -11,7 +11,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VinputText { //extends hbox?
+public class VinputText {
     Image correctimage = new Image("file:C:\\Users\\Feeli\\IdeaProjects\\untitled\\src\\sample\\resources\\check.png");
     Image notCorrectimage = new Image("file:C:\\Users\\Feeli\\IdeaProjects\\untitled\\src\\sample\\resources\\notecheck.png");
 
@@ -55,18 +55,13 @@ public class VinputText { //extends hbox?
         textInput.textProperty().addListener(((observable) -> {
             consideredValidator.validate(textInput.getText());
             if (consideredValidator.isValid()) {
-                Controller.buttonAvailableness = false;
                 image.setImage(correctimage);
                 image.setOnMouseEntered(null);
                 Tooltip.uninstall(image,imagetooltip);
 
-
-
             }else{
-                Controller.buttonAvailableness = true;
                 image.setImage(notCorrectimage);
                 Tooltip.install(image,imagetooltip);
-
 
             }
 

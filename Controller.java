@@ -16,12 +16,6 @@ public class Controller {
     @FXML
     private Button confirmButton;
 
-    @FXML
-    void confirmButtonClicked(ActionEvent event) {
-
-    }
-
-    static boolean buttonAvailableness = false;
 
     @FXML
     void initialize() throws ClassNotFoundException {
