@@ -16,6 +16,11 @@ public class Controller {
     @FXML
     private Button confirmButton;
 
+    @FXML
+    void confirmButtonClicked(ActionEvent event) {
+
+    }
+
 
     @FXML
     void initialize() throws ClassNotFoundException {
