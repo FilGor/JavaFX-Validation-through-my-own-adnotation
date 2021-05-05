@@ -1,38 +1,41 @@
 package sample;
 
-import javafx.event.EventHandler;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
-import javafx.scene.control.Tooltip;
+
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VinputText { //extends hbox?
     Image correctimage = new Image("file:C:\\Users\\Feeli\\IdeaProjects\\untitled\\src\\sample\\resources\\check.png");
     Image notCorrectimage = new Image("file:C:\\Users\\Feeli\\IdeaProjects\\untitled\\src\\sample\\resources\\notecheck.png");
 
-    private Tooltip imagetooltip = new Tooltip();
-
-
-    private HBox subHBox;
-    private TextInputControl textInput;
-    private Field uploadedField;
+    private final Tooltip imagetooltip = new Tooltip();
+    private final TextInputControl textInput;
+    private final Field uploadedField;
     private Validator consideredValidator;
-    private ImageView image;
+    static private List<Validator> allValidators = new ArrayList<>();
+    private final ImageView image;
+    private final Button confirmButton;
 
-    public VinputText(VBox mainvbox, Field field){
+    public VinputText(VBox mainvbox, Field field, Button confirmButton){
 
-    this.subHBox = new HBox();
-    this.textInput = new TextField();
-    this.uploadedField = field;
+        HBox subHBox = new HBox();
+        if (field.getType().equals(String.class))
+        { this.textInput = new TextArea();
+        }else{
+            this.textInput = new TextField();
+        }
+        textInput.setPrefSize(200,40);
+        this.uploadedField = field;
+        this.image = new ImageView();
+        this.confirmButton = confirmButton;
 
-    this.image = new ImageView();
     subHBox.getChildren().add(image);
     subHBox.getChildren().add(textInput);
     subHBox.getChildren().add(new Label(field.getName()));
@@ -41,24 +44,40 @@ public class VinputText { //extends hbox?
     }
     void registerValidator(Validator v){
         this.consideredValidator =v;
+        allValidators.add(v);
     }
+
+    private int numberOfAllValidValidators;
 
     void checkFieldListener(){
         imagetooltip.setText(uploadedField.getAnnotation(MyPattern.class).message());
 
-        textInput.textProperty().addListener((observable -> {
+        textInput.textProperty().addListener(((observable) -> {
             consideredValidator.validate(textInput.getText());
             if (consideredValidator.isValid()) {
+                Controller.buttonAvailableness = false;
                 image.setImage(correctimage);
                 image.setOnMouseEntered(null);
                 Tooltip.uninstall(image,imagetooltip);
 
+
+
             }else{
+                Controller.buttonAvailableness = true;
                 image.setImage(notCorrectimage);
                 Tooltip.install(image,imagetooltip);
+
+
             }
 
+            numberOfAllValidValidators = allValidators.stream().filter(Validator::isValid).toList().size();
+
+            if(allValidators.size() == numberOfAllValidValidators){
+                confirmButton.setDisable(false);
+            }
         }));
+
+
     }
 
 }

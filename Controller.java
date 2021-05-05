@@ -21,18 +21,23 @@ public class Controller {
 
     }
 
+    static boolean buttonAvailableness = false;
+
     @FXML
     void initialize() throws ClassNotFoundException {
+        confirmButton.setDisable(true);
         Class<?> cl = Class.forName("sample.Client");
         Field[] fields = cl.getDeclaredFields();
         Arrays.stream(fields)
                 .filter(field -> field.isAnnotationPresent(MyPattern.class))
                 .forEach(field -> {
                     MyPatternValidator mpv = new MyPatternValidator(field.getAnnotation(MyPattern.class));
-                    VinputText vt = new VinputText(mainVBox,field);
+                    VinputText vt = new VinputText(mainVBox,field,confirmButton); //mainVBox - dla tworzonych Hbox'ow
                     vt.registerValidator(mpv);
                     vt.checkFieldListener();
                 });
+
+
     }
 
 
