@@ -67,9 +67,7 @@ public class VinputText {
 
             numberOfAllValidValidators = allValidators.stream().filter(Validator::isValid).toList().size();
 
-            if(allValidators.size() == numberOfAllValidValidators){
-                confirmButton.setDisable(false);
-            }
+            confirmButton.setDisable(allValidators.size() != numberOfAllValidValidators);
         }));
 
 
