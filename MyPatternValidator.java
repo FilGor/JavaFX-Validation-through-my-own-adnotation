@@ -2,7 +2,7 @@ package sample;
 
 public class MyPatternValidator implements Validator {
 
-    private MyPattern mpAnnotation;
+    private final MyPattern mpAnnotation;
     private boolean valid = false;
 
     public MyPatternValidator(MyPattern mpAnnotation){

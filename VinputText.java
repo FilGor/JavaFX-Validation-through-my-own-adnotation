@@ -50,7 +50,7 @@ public class VinputText {
     private int numberOfAllValidValidators;
 
     void checkFieldListener(){
-        imagetooltip.setText(uploadedField.getAnnotation(MyPattern.class).message());
+        imagetooltip.setText(consideredValidator.getMessage());
 
         textInput.textProperty().addListener(((observable) -> {
             consideredValidator.validate(textInput.getText());
