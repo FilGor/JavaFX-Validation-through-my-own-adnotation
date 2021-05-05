@@ -17,9 +17,8 @@ public class VinputText {
 
     private final Tooltip imagetooltip = new Tooltip();
     private final TextInputControl textInput;
-    private final Field uploadedField;
     private Validator consideredValidator;
-    static private List<Validator> allValidators = new ArrayList<>();
+    static private final List<Validator> allValidators = new ArrayList<>();
     private final ImageView image;
     private final Button confirmButton;
 
@@ -32,7 +31,6 @@ public class VinputText {
             this.textInput = new TextField();
         }
         textInput.setPrefSize(200,40);
-        this.uploadedField = field;
         this.image = new ImageView();
         this.confirmButton = confirmButton;
 
@@ -62,11 +60,9 @@ public class VinputText {
             }else{
                 image.setImage(notCorrectimage);
                 Tooltip.install(image,imagetooltip);
-
             }
 
             numberOfAllValidValidators = allValidators.stream().filter(Validator::isValid).toList().size();
-
             confirmButton.setDisable(allValidators.size() != numberOfAllValidValidators);
         }));
 
